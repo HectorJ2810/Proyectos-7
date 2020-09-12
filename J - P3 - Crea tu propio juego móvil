@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Conversor de Medidas',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: Conversor(title: '¿Cuantos pies mios mides?'),
+    );
+  }
+}
+
+class Conversor extends StatefulWidget {
+  Conversor({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _ConversorState createState() => _ConversorState();
+}
+
+class _ConversorState extends State<Conversor> {
+  var _output = '';
+  final inputController = TextEditingController();
+
+  void _calculateMed() {
+    setState(() {
+      double medidatuya = double.parse(inputController.text);
+      double medidaenpatas = (medidatuya / 30);
+      _output = "$medidaenpatas" + ' patas';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Form(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormField(
+                controller: inputController,
+              ),
+              RaisedButton(
+                onPressed: () {
+                  _calculateMed();
+                },
+              ),
+              Text(_output),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
